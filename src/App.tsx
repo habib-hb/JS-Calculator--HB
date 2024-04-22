@@ -88,7 +88,7 @@ function App() {
             <div id="answer">{answer}</div>
             <div id="expression">{expression}</div>
           </div>
-          <div id="calculator-buttons">
+          <div id="calculator-buttons-container">
           <button id="clear" onClick={()=> buttonPress("clear")} className="light-gray">C</button>
           <button id="negative" onClick={()=> buttonPress("negative")} className="light-gray">+/-</button>
           <button id="percentage" onClick={()=> buttonPress("percentage")} className="light-gray">%</button>
@@ -107,7 +107,7 @@ function App() {
           <button id="add" onClick={()=> buttonPress("+")} className="yellow">+</button>
           <button id="zero" onClick={()=> buttonPress("0")} className="dark-gray">0</button>
           <button id="decimal" onClick={()=> buttonPress(".")} className="dark-gray">.</button>
-          <button id="equals" onClick={()=> buttonPress("=")} className="yellow">=</button>
+          <button id="equals" onClick={()=> buttonPress("=")} className="light-gray">=</button>
           </div>
         </div>
       </div>

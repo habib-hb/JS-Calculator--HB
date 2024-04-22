@@ -16,7 +16,8 @@
 
 #calculator{
   display: grid;
-  width: 500px;
+  width: 480px;
+  height: 120vh;
   grid-template-areas: 
     "display display display display"
     "clear negative percentage divide"
@@ -33,7 +34,7 @@
   background-color: var(--black);      
 }
 
-#calculator-buttons{
+#calculator-buttons-container{
   display: grid;
   width: 500px;
   grid-template-areas: 
@@ -42,9 +43,10 @@
     "seven eight nine multiply"
     "four five six subtract"
     "one two three add"
-    "zero zero decimal equals";
+    "zero decimal equals equals";
     grid-template-columns: 1fr 1fr 1fr 1fr ;  
     gap: 20px;  
+    
 }
 
 #display{
@@ -71,13 +73,17 @@ button {
   font-size: 24px;
   border: none;
   cursor: pointer;
-  border-radius: 100px;
+  border-radius: 15% 35% 15% 35%;
   width: 100%;
   transition: transform 0.1s ease-in-out;
 }
 
 button:active{
   transform: scale(0.9);
+}
+
+button#equals{
+   border-radius: 16px;
 }
 
 #answer {
