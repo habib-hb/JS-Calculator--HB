@@ -10,14 +10,14 @@ function App() {
     };
   const buttonPress= (symbol: string) => {
     if (symbol === "clear") {
-      setAnswer("0");
-      setExpression("");
+      setAnswer("");
+      setExpression("0");
     } else if (symbol === "negative") {
       if(answer === "") return;
       setAnswer(
         answer.charAt(0) === "-" ? answer.slice(1) : "-" + answer
       );
-    } else if (symbol === "percentage") {
+    } else if (symbol === "percent") {
       if(answer === "") return;
       setAnswer(
         (parseFloat(answer) / 100).toString()
@@ -31,18 +31,52 @@ function App() {
         setExpression(expression + symbol);
       }
     }else if (symbol === "."){
-    const lastNumber = expression.split(/[*+-/]/g).pop();
+    const lastNumber = expression.split(/[-+/*]/g).pop();
 
     if(lastNumber?.includes(".")) return;
     setExpression(expression + symbol);
 
+    }else {
+      if(expression.charAt(0) === "0"){
+        setExpression(expression.slice(1) + symbol);
+      }else{
+        setExpression(expression + symbol);
+      }
     }
 
 
   }
 
   const calculate = () => {
+        //doing nothing is the last character is an operator
+        if(isOperator(et.charAt(et.length -1 ))) return;
 
+        //using the last operator if there are multiple operators in  a row
+        const parts = et.split(" ");
+        const newParts = [];
+
+        //go through parts backwards 
+        for(let i = parts.length - 1; i >= 0; i--){
+          if(["/", "*", "+"].includes(parts[i]) && isOperator(parts[i - 1])){
+            newParts.unshift(parts[i]);
+            let j=0;
+            let k= i -1;
+            while(isOperator(parts[k])) {
+              k--;
+              j++;
+            }
+            i -= j;
+          }else{
+            newParts.unshift(parts[i]);
+          }
+        }
+        const newExpression = newParts.join(" ");
+        if(isOperator(newExpression.charAt(0))) {
+          setAnswer(eval(answer +  newExpression) as string)
+        } else {
+          setAnswer(eval(newExpression) as string)
+       } 
+          setExpression("");   
   }
 
   return (
@@ -54,6 +88,7 @@ function App() {
             <div id="answer">{answer}</div>
             <div id="expression">{expression}</div>
           </div>
+          <div id="calculator-buttons">
           <button id="clear" onClick={()=> buttonPress("clear")} className="light-gray">C</button>
           <button id="negative" onClick={()=> buttonPress("negative")} className="light-gray">+/-</button>
           <button id="percentage" onClick={()=> buttonPress("percentage")} className="light-gray">%</button>
@@ -73,6 +108,7 @@ function App() {
           <button id="zero" onClick={()=> buttonPress("0")} className="dark-gray">0</button>
           <button id="decimal" onClick={()=> buttonPress(".")} className="dark-gray">.</button>
           <button id="equals" onClick={()=> buttonPress("=")} className="yellow">=</button>
+          </div>
         </div>
       </div>
     </>
